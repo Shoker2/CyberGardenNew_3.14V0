@@ -22,7 +22,7 @@
         <form id="myForm">
 
             <div class="input_type_login">
-                <input type="text" id="id" name="id" placeholder="Введите логин" class="text_input" id="username"><br>
+                <input type="text" id="id" name="id" placeholder="Введите ID" class="text_input" id="username"><br>
             </div>
             <div class="input_type_password">
                 <input type="password" id="password" name="password" placeholder="Введите пароль" class="password_input" id="password"><br>
