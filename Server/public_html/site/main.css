@@ -1,0 +1,78 @@
+body{
+    margin: 0px;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    background-color: black;
+}
+a,p{
+    text-decoration: none;
+    color: black;
+    width: max-content;
+    height: max-content;
+}
+.logo{
+    width: max-content;
+    height: max-content;
+    color: white;
+
+}
+.logo_section{
+    width: 100vw;
+    height: max-content;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0px;
+}
+.main_table{
+    margin-top: 35px;
+    width: max-content;
+    height: max-content;
+    background-color: #94bbe9;
+    position: absolute;
+    top: 50%;
+    border: 5px solid #94bbe9;
+    border-radius: 15px;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+.data_base_1{
+    width: 600px;
+    height: max-content;
+    text-align: center;
+    border-color: white;
+    border: 5px solid;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+
+}
+.data_base_item{
+    color: black;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 30px;
+}
+.reboot_data{
+    width: max-content;
+    margin-bottom: 10px;
+    padding: 5px;
+    text-decoration: underline;
+
+}
+a:hover{
+    cursor: pointer;
+    color: rgb(181, 9, 9);
+    text-decoration: none;
+
+}
+.main_section_in_header{
+    margin-top: 0px;
+}
