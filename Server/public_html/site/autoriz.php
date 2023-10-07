@@ -13,6 +13,13 @@
     <title>3.14V0 Авторизация</title>
 </head>
 
+<?php
+if ($_COOKIE['id']) {
+setcookie("id", "0");
+setcookie("password", "");
+}
+?>
+
 <body>
     <div class="main_section_in_autoriz">
         <p class="hello_world">
