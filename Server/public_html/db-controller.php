@@ -21,23 +21,24 @@ function db_connect()
     return $conn;
 }
 
-function test($new_password)
-{
-    $conn = db_connect();
+// function test($new_password)
+// {
+//     $conn = db_connect();
 
-    $sql = "UPDATE `sesorControlers` SET `Password` = '" . $new_password . "' WHERE `sesorControlers`.`id` = 7";
+//     $sql = "UPDATE `sesorControlers` SET `Password` = '" . $new_password . "' WHERE `sesorControlers`.`id` = 7";
 
-    if ($conn->query(($sql)) == TRUE) {
-        echo "OK";
-    } else {
-        echo $conn->error;
-    }
+//     if ($conn->query(($sql)) == TRUE) {
+//         echo "OK";
+//     } else {
+//         echo $conn->error;
+//     }
 
-    $conn->close();
-}
+//     $conn->close();
+// }
 
 function add_controller($password)
 {
+    $password = password_hash($password, PASSWORD_DEFAULT);
     $conn = db_connect();
     $sql = "INSERT INTO `sesorControlers` (`id`, `Password`, `Data`) VALUES (NULL, '" . $password . "', '{\"temper\": 10.47, \"humidity\": 10.71}');";
    
@@ -68,6 +69,7 @@ function update_data_controller($sesor_control_id, $password, $json)
 
 function update_password_controller($sesor_control_id, $password, $new_password)
 {
+    $new_password = password_hash($new_password, PASSWORD_DEFAULT);
     $row = read_controller($sesor_control_id, $password);
 
     $conn = db_connect();
@@ -85,6 +87,7 @@ function update_password_controller($sesor_control_id, $password, $new_password)
 
 function read_controller($sesor_control_id, $password)
 {
+    // $password = password_hash($password, PASSWORD_DEFAULT);
     $conn = db_connect();
     
     $sql = "SELECT * FROM sesorControlers WHERE id=".$sesor_control_id;
@@ -95,7 +98,8 @@ function read_controller($sesor_control_id, $password)
 
     $conn->close();
 
-    if ($row["Password"] == $password) {
+    // if ($row["Password"] == $password) {
+    if (password_verify($password, $row["Password"])) {
         return $row;
     } else {
         die("Incorrect password or id");
