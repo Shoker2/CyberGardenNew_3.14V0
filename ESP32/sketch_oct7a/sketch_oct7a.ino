@@ -9,8 +9,8 @@ DHT dht(DHTPIN, DHTTYPE);
 const char* ssid = "TS2_YouGame";
 const char* password = "12343212";
 
-const String controller_id = "5";
-const String controller_password = "sxfcgj";
+const String controller_id = "12";
+const String controller_password = "qwerty";
 
 String serverName = "http://zaskamilma.temp.swtest.ru/test.php";
 
