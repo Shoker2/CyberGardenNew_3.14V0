@@ -25,12 +25,13 @@ def start(message):
     btn_1 = types.KeyboardButton("Сайт")
     btn_2 = types.KeyboardButton("Получить данные контроллера")
     btn_3 = types.KeyboardButton("Выход")
-    markup.add(btn_1, btn_2, btn_3)
+    btn_4 = types.KeyboardButton("О 3.14Ve")
+    markup.add(btn_1, btn_2, btn_3, btn_4)
     bot.send_message(message.chat.id, text="Привет 👋, {0.first_name}! Я бот для определения погоды 🌤️\n"
                                            "Вот, что я умею:\n"
                                            "1) Получить данные контроллера\n"
                                            "2) Сайт\n"
-                                           "3) Выход"
+                                           "3) Выход\n"
                                            "4) О разработчиках".format(message.from_user), reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
@@ -53,6 +54,13 @@ def get_weather(message):
         if (get_user_data(message.from_user.id) != None):
             del user_data[message.from_user.id]
         bot.send_message(message.chat.id, "Готово".format(message.from_user))
+
+    if message.text == 'О 3.14Ve':
+        bot.send_message(message.chat.id,
+                         "Пиво🍻 (будущий РыбНадзор) это маленькая студия разработки программного обеспечения, состоящая из 5 человек: \n"
+                         "Перепелицын Иван, Феночкин Станислав, Иванов Артём, Жмурко Андрей, Кожемякин Ярослав\n"
+                         "Пиво🍻 - двигатель прогресса!\n\n"
+                         "Disclaimer: мы не приветствуем употребление алкогольных напитков, ЗОЖ лучше".format(message.from_user))
 
 def get_user_data(uid):
     try:
