@@ -2,10 +2,6 @@ import telebot
 from telebot import types
 import requests
 
-
-# id пароль
-# ("5", "sxfcgj")
-
 # dict
 global user_data
 user_data = {}
@@ -34,13 +30,14 @@ def start(message):
                                            "Вот, что я умею:\n"
                                            "1) Получить данные контроллера\n"
                                            "2) Сайт\n"
-                                           "3) Выход".format(message.from_user), reply_markup=markup)
+                                           "3) Выход"
+                                           "4) О разработчиках".format(message.from_user), reply_markup=markup)
 
 @bot.message_handler(content_types=['text'])
 def get_weather(message):
     if message.text == 'Получить данные контроллера':
-        if user_data[message.from_user.id] != {}:
-            contr = get_data(user_data[message.from_user.id]['id'], user_data[message.from_user.id]['password'])
+        if get_user_data(message.from_user.id) != None:
+            contr = get_data(get_user_data(message.from_user.id)['id'], get_user_data(message.from_user.id)['password'])
             bot.send_message(message.chat.id,f"Температура 🌡️: {contr.json()['Data']['temper']}°C\nВлажность 💦: {contr.json()['Data']['humidity']}%")
         else:
             ans_bot = bot.send_message(message.chat.id, f"Введите, пожалуста, id и пароль через пробел".format(message.from_user))
@@ -53,17 +50,34 @@ def get_weather(message):
         bot.send_message(message.chat.id, "Привет, {0.first_name} Нажми на кнопку и перейди на сайт)".format(message.from_user), reply_markup=markup)
 
     if message.text == 'Выход':
-        user_data[message.from_user.id] = {}
+        if (get_user_data(message.from_user.id) != None):
+            del user_data[message.from_user.id]
         bot.send_message(message.chat.id, "Готово".format(message.from_user))
+
+def get_user_data(uid):
+    try:
+        return user_data[uid]
+    except KeyError:
+        return None
+
+def valid_id(id):
+    try:
+        int(id)
+        return True
+    except ValueError:
+        return False
 
 def save_login_password(message):
     login_pass = str(message.text).split(' ')
-    contr = get_data(login_pass[0], login_pass[1])
-    if contr.text == "Incorrect password or id":
-        bot.send_message(message.chat.id,"Неверный id или пароль ❗")
+    if str.isnumeric(login_pass[0]) and valid_id(login_pass[0]):
+        contr = get_data(login_pass[0], login_pass[1])
+        if contr.text == "Incorrect password or id" or len(login_pass) != 2:
+            bot.send_message(message.chat.id,"Неверный id или пароль ❗")
+        else:
+            bot.send_message(message.chat.id, f"Температура 🌡️: {contr.json()['Data']['temper']}°C\nВлажность 💦: {contr.json()['Data']['humidity']}%")
+            user_data[message.from_user.id] = {"id": login_pass[0], "password": login_pass[1]}
     else:
-        bot.send_message(message.chat.id, f"Температура 🌡️: {contr.json()['Data']['temper']}°C\nВлажность 💦: {contr.json()['Data']['humidity']}%")
-        user_data[message.from_user.id] ={"id": login_pass[0], "password": login_pass[1]}
+        bot.send_message(message.chat.id, "Неверный id или пароль ❗")
 
 
 bot.polling(none_stop=True)
